@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EduEquip.ManageProjects"
+             BackgroundColor="#f8f9fa"
+             Title="Manage Projects">
+
+    <Grid>
+        <!-- Page Header -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header with gradient background -->
+        <Frame Grid.Row="0" Padding="20" BackgroundColor="#2c3e50" HasShadow="True">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Image Grid.Column="0" Source="logo.png" HeightRequest="60" WidthRequest="60" VerticalOptions="Center"/>
+
+                <VerticalStackLayout Grid.Column="1" Margin="15,0,0,0" VerticalOptions="Center">
+                    <Label Text="EduEquip" FontSize="22" FontAttributes="Bold" TextColor="White"/>
+                    <Label x:Name="WelcomeLabel" Text="Welcome, Professor" FontSize="16" TextColor="#e0e0e0"/>
+                </VerticalStackLayout>
+            </Grid>
+        </Frame>
+
+        <!-- Main Content with scrolling -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20" Spacing="15">
+                <Label Text="Manage Projects" FontSize="24" FontAttributes="Bold" TextColor="#2c3e50" Margin="0,10,0,20"/>
+
+                <!-- Create Project Button -->
+                <Button Text="+ Create New Project" 
+                        BackgroundColor="#ff9800" 
+                        TextColor="White"
+                        CornerRadius="8"
+                        HeightRequest="50"
+                        Margin="0,0,0,20"
+                        Clicked="OnCreateProjectClicked"/>
+
+                <!-- Projects List -->
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
+                    <!-- Subjects List -->
+                    <VerticalStackLayout Grid.Column="0" Spacing="10">
+                        <Label Text="Select Subject" FontSize="18" FontAttributes="Bold" TextColor="#2c3e50"/>
+
+                        <Frame BackgroundColor="White" CornerRadius="8" HasShadow="True" Padding="0">
+                            <ListView x:Name="SubjectsListView" 
+                                      ItemSelected="OnSubjectSelected"
+                                      SeparatorColor="#eee"
+                                      RowHeight="70">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Grid Padding="15,10">
+                                                <VerticalStackLayout>
+                                                    <Label Text="{Binding Code}" FontAttributes="Bold" FontSize="16" TextColor="#2c3e50"/>
+                                                    <Label Text="{Binding Name}" FontSize="14" TextColor="#666"/>
+                                                </VerticalStackLayout>
+                                            </Grid>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Frame>
+                    </VerticalStackLayout>
+
+                    <!-- Projects List -->
+                    <VerticalStackLayout Grid.Column="1" Spacing="10">
+                        <Label Text="Projects" FontSize="18" FontAttributes="Bold" TextColor="#2c3e50"/>
+
+                        <Frame BackgroundColor="White" CornerRadius="8" HasShadow="True" Padding="0">
+                            <ListView x:Name="ProjectsListView" 
+                                      ItemSelected="OnProjectSelected"
+                                      SeparatorColor="#eee"
+                                      RowHeight="90">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Grid Padding="15,10">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+
+                                                <Label Grid.Row="0" Text="{Binding Name}" FontAttributes="Bold" FontSize="16" TextColor="#2c3e50"/>
+                                                <Label Grid.Row="1" Text="{Binding Description}" FontSize="14" TextColor="#666" LineBreakMode="TailTruncation"/>
+                                                <Label Grid.Row="2" Text="{Binding Deadline, StringFormat='Deadline: {0:MMM dd, yyyy}'}" FontSize="12" TextColor="#ff9800"/>
+                                            </Grid>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Frame>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Project Details -->
+                <Frame x:Name="ProjectDetailsFrame" BackgroundColor="White" CornerRadius="8" HasShadow="True" Padding="20" IsVisible="False" Margin="0,20,0,0">
+                    <VerticalStackLayout Spacing="15">
+                        <Label Text="Project Details" FontSize="20" FontAttributes="Bold" TextColor="#2c3e50"/>
+
+                        <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto, Auto, Auto" RowSpacing="10" ColumnSpacing="15">
+                            <Label Grid.Row="0" Grid.Column="0" Text="Project Name:" FontAttributes="Bold" TextColor="#333"/>
+                            <Label Grid.Row="0" Grid.Column="1" x:Name="ProjectNameLabel" TextColor="#333"/>
+
+                            <Label Grid.Row="1" Grid.Column="0" Text="Subject:" FontAttributes="Bold" TextColor="#333"/>
+                            <Label Grid.Row="1" Grid.Column="1" x:Name="ProjectSubjectLabel" TextColor="#333"/>
+
+                            <Label Grid.Row="2" Grid.Column="0" Text="Description:" FontAttributes="Bold" TextColor="#333"/>
+                            <Label Grid.Row="2" Grid.Column="1" x:Name="ProjectDescriptionLabel" TextColor="#333"/>
+
+                            <Label Grid.Row="3" Grid.Column="0" Text="Deadline:" FontAttributes="Bold" TextColor="#333"/>
+                            <Label Grid.Row="3" Grid.Column="1" x:Name="ProjectDeadlineLabel" TextColor="#333"/>
+
+                            <Label Grid.Row="4" Grid.Column="0" Text="Status:" FontAttributes="Bold" TextColor="#333"/>
+                            <Label Grid.Row="4" Grid.Column="1" x:Name="ProjectStatusLabel" TextColor="#333"/>
+                        </Grid>
+
+                        <!-- Associated Equipment -->
+                        <Label Text="Required Equipment" FontSize="18" FontAttributes="Bold" TextColor="#2c3e50" Margin="0,10,0,0"/>
+
+                        <Frame BackgroundColor="#f8f9fa" CornerRadius="8" Padding="10" HasShadow="False">
+                            <ListView x:Name="EquipmentListView" 
+                                      HeightRequest="150"
+                                      SeparatorColor="#eee">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Grid Padding="10" ColumnDefinitions="Auto, *, Auto">
+                                                <Label Grid.Column="0" Text="{Binding Id}" WidthRequest="50" TextColor="#333"/>
+                                                <Label Grid.Column="1" Text="{Binding Name}" TextColor="#333"/>
+                                                <Label Grid.Column="2" Text="{Binding Quantity}" TextColor="#333"/>
+                                            </Grid>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Frame>
+
+                        <!-- Action Buttons -->
+                        <HorizontalStackLayout Spacing="10" HorizontalOptions="End" Margin="0,10,0,0">
+                            <Button Text="Add Equipment" 
+                                    BackgroundColor="#4caf50" 
+                                    TextColor="White"
+                                    CornerRadius="6"
+                                    Clicked="OnAddEquipmentClicked"/>
+
+                            <Button Text="Edit Project" 
+                                    BackgroundColor="#1976d2" 
+                                    TextColor="White"
+                                    CornerRadius="6"
+                                    Clicked="OnEditProjectClicked"/>
+
+                            <Button Text="Delete Project" 
+                                    BackgroundColor="#f44336" 
+                                    TextColor="White"
+                                    CornerRadius="6"
+                                    Clicked="OnDeleteProjectClicked"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Frame>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

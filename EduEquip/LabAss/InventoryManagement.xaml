@@ -1,0 +1,74 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EduEquip.InventoryManagement"
+             Title="Inventory Management">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="10">
+
+    
+            <Entry x:Name="SearchEntry" Placeholder="Search equipment..." />
+            <Button Text="Search" Clicked="OnSearchClicked" />
+
+         
+            <CollectionView x:Name="EquipmentCollectionView" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="Gray" Margin="5" BackgroundColor="{Binding RowColor}">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Name}" FontAttributes="Bold" />
+                                <Label Text="{Binding Category}" FontSize="Small" />
+                                <Label Text="Qty: " FontSize="Small">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Qty: " />
+                                            <Span Text="{Binding Quantity}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Text="{Binding Condition}" FontSize="Small" />
+                                <HorizontalStackLayout Spacing="10">
+                                    <Button Text="Edit" Clicked="OnEditEquipmentClicked" CommandParameter="{Binding Id}" />
+                                    <Button Text="Delete" Clicked="OnDeleteEquipmentClicked" CommandParameter="{Binding Id}" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Entry x:Name="EquipmentIdEntry" Placeholder="Equipment ID" />
+            <Entry x:Name="EquipmentNameEntry" Placeholder="Equipment Name" />
+            <Picker x:Name="CategoryPicker" Title="Select Category">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Electronic Equipment</x:String>
+                        <x:String>Laboratory Glassware</x:String>
+                        <x:String>Measuring Instruments</x:String>
+                        <x:String>Safety Equipment</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+            <Entry x:Name="QuantityEntry" Placeholder="Quantity" Keyboard="Numeric" />
+            <Picker x:Name="ConditionPicker" Title="Select Condition">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>New</x:String>
+                        <x:String>Good</x:String>
+                        <x:String>Fair</x:String>
+                        <x:String>Poor</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+            <Entry x:Name="LocationEntry" Placeholder="Location" />
+            <Editor x:Name="NotesEditor" Placeholder="Notes" HeightRequest="100" />
+
+
+            <Button Text="Add Equipment" Clicked="OnAddEquipmentClicked" />
+            <Button Text="Clear Form" Clicked="OnClearFormClicked" />
+            <Button Text="Back to Dashboard" Clicked="OnBackToDashboardClicked" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EduEquip.StudentDashboard"
+             BackgroundColor="#f8f9fa"
+             Title="Student Dashboard">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+
+        <Frame Grid.Row="0" Padding="20" BackgroundColor="#2c3e50" HasShadow="True">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Image Grid.Column="0" Source="logo.png" HeightRequest="60" WidthRequest="60" VerticalOptions="Center"/>
+
+                <VerticalStackLayout Grid.Column="1" Margin="15,0,0,0" VerticalOptions="Center">
+                    <Label Text="EduEquip" FontSize="22" FontAttributes="Bold" TextColor="White"/>
+                    <Label x:Name="WelcomeLabel" Text="Welcome, Student" FontSize="16" TextColor="#e0e0e0"/>
+                </VerticalStackLayout>
+            </Grid>
+        </Frame>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20" Spacing="15">
+                <Label Text="Dashboard" FontSize="24" FontAttributes="Bold" TextColor="#2c3e50" Margin="0,10,0,5"/>
+
+                <Grid ColumnSpacing="15" RowSpacing="15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+
+                    <Frame Grid.Row="0" Grid.Column="0" 
+                           BackgroundColor="White"
+                           CornerRadius="8"
+                           HasShadow="True"
+                           Padding="15">
+                        <VerticalStackLayout Spacing="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Frame Grid.Column="0" 
+                                       BackgroundColor="#e3f2fd" 
+                                       CornerRadius="8" 
+                                       HeightRequest="45" 
+                                       WidthRequest="45"
+                                       Padding="0"
+                                       HasShadow="False">
+                                    <Image Source="projects.png" 
+                                           HeightRequest="25" 
+                                           WidthRequest="25" 
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                </Frame>
+
+                                <Label Grid.Column="1"
+                                       Text="Projects" 
+                                       FontSize="18" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#2c3e50"
+                                       VerticalOptions="Center"
+                                       Margin="10,0,0,0"/>
+                            </Grid>
+
+                            <Label Text="View your assigned projects and track requirements" 
+                                   TextColor="#666666"
+                                   FontSize="14"/>
+
+                            <Button x:Name="ViewProjectsButton"
+                                    Text="View Projects" 
+                                    BackgroundColor="#1976d2" 
+                                    TextColor="White"
+                                    CornerRadius="6"
+                                    HeightRequest="40"
+                                    Clicked="OnViewProjectsClicked"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                  
+                    <Frame Grid.Row="0" Grid.Column="1" 
+                           BackgroundColor="White"
+                           CornerRadius="8"
+                           HasShadow="True"
+                           Padding="15">
+                        <VerticalStackLayout Spacing="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Frame Grid.Column="0" 
+                                       BackgroundColor="#fff8e1" 
+                                       CornerRadius="8" 
+                                       HeightRequest="45" 
+                                       WidthRequest="45"
+                                       Padding="0"
+                                       HasShadow="False">
+                                    <Image Source="request.png" 
+                                           HeightRequest="25" 
+                                           WidthRequest="25" 
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                </Frame>
+
+                                <Label Grid.Column="1"
+                                       Text="Request Equipment" 
+                                       FontSize="18" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#2c3e50"
+                                       VerticalOptions="Center"
+                                       Margin="10,0,0,0"/>
+                            </Grid>
+
+                            <Label Text="Request new equipment for your ongoing projects" 
+                                   TextColor="#666666"
+                                   FontSize="14"/>
+
+                            <Button x:Name="RequestEquipmentButton"
+                                    Text="Request Now" 
+                                    BackgroundColor="#ff9800" 
+                                    TextColor="White"
+                                    CornerRadius="6"
+                                    HeightRequest="40"
+                                    Clicked="OnRequestEquipmentClicked"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <Frame Grid.Row="1" Grid.Column="0" 
+                           BackgroundColor="White"
+                           CornerRadius="8"
+                           HasShadow="True"
+                           Padding="15">
+                        <VerticalStackLayout Spacing="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Frame Grid.Column="0" 
+                                       BackgroundColor="#e8f5e9" 
+                                       CornerRadius="8" 
+                                       HeightRequest="45" 
+                                       WidthRequest="45"
+                                       Padding="0"
+                                       HasShadow="False">
+                                    <Image Source="track.png" 
+                                           HeightRequest="25" 
+                                           WidthRequest="25" 
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                </Frame>
+
+                                <Label Grid.Column="1"
+                                       Text="Equipment Tracking" 
+                                       FontSize="18" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#2c3e50"
+                                       VerticalOptions="Center"
+                                       Margin="10,0,0,0"/>
+                            </Grid>
+
+                            <Label Text="Monitor your borrowed equipment and due dates" 
+                                   TextColor="#666666"
+                                   FontSize="14"/>
+
+                            <Button x:Name="TrackBorrowedButton"
+                                    Text="View Borrowed Items" 
+                                    BackgroundColor="#4caf50" 
+                                    TextColor="White"
+                                    CornerRadius="6"
+                                    HeightRequest="40"
+                                    Clicked="OnTrackBorrowedEquipmentClicked"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+             
+                    <Frame Grid.Row="1" Grid.Column="1" 
+                           BackgroundColor="White"
+                           CornerRadius="8"
+                           HasShadow="True"
+                           Padding="15">
+                        <VerticalStackLayout Spacing="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Frame Grid.Column="0" 
+                                       BackgroundColor="#f3e5f5" 
+                                       CornerRadius="8" 
+                                       HeightRequest="45" 
+                                       WidthRequest="45"
+                                       Padding="0"
+                                       HasShadow="False">
+                                    <Image Source="history.png" 
+                                           HeightRequest="25" 
+                                           WidthRequest="25" 
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                </Frame>
+
+                                <Label Grid.Column="1"
+                                       Text="Transaction History" 
+                                       FontSize="18" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#2c3e50"
+                                       VerticalOptions="Center"
+                                       Margin="10,0,0,0"/>
+                            </Grid>
+
+                            <Label Text="Review your past equipment borrowing records" 
+                                   TextColor="#666666"
+                                   FontSize="14"/>
+
+                            <Button x:Name="ViewHistoryButton"
+                                    Text="View History" 
+                                    BackgroundColor="#9c27b0" 
+                                    TextColor="White"
+                                    CornerRadius="6"
+                                    HeightRequest="40"
+                                    Clicked="OnTransactionHistoryClicked"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

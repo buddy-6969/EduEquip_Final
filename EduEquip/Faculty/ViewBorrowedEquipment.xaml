@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EduEquip.ViewBorrowedEquipment"
+             BackgroundColor="#f8f9fa"
+             Title="Borrowed Equipment">
+
+    <Grid>
+        <!-- Page Header -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header with gradient background -->
+        <Frame Grid.Row="0" Padding="20" BackgroundColor="#2c3e50" HasShadow="True">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Image Grid.Column="0" Source="logo.png" HeightRequest="60" WidthRequest="60" VerticalOptions="Center"/>
+
+                <VerticalStackLayout Grid.Column="1" Margin="15,0,0,0" VerticalOptions="Center">
+                    <Label Text="EduEquip" FontSize="22" FontAttributes="Bold" TextColor="White"/>
+                    <Label Text="Borrowed Equipment Tracking" FontSize="16" TextColor="#e0e0e0"/>
+                </VerticalStackLayout>
+
+                <Button Grid.Column="2" Text="Back" 
+                        BackgroundColor="#4caf50" 
+                        TextColor="White"
+                        WidthRequest="100"
+                        HeightRequest="40"
+                        CornerRadius="6"
+                        Clicked="OnBackClicked"/>
+            </Grid>
+        </Frame>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="1" Padding="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Title and Search -->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" 
+                       Text="Currently Borrowed Equipment" 
+                       FontSize="24" 
+                       FontAttributes="Bold" 
+                       TextColor="#2c3e50" 
+                       VerticalOptions="Center"/>
+
+                <Frame Grid.Column="1" 
+                       Padding="5" 
+                       BorderColor="#e0e0e0" 
+                       CornerRadius="8" 
+                       BackgroundColor="White"
+                       HasShadow="False"
+                       WidthRequest="250">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Entry Grid.Column="0" 
+                               Placeholder="Search equipment..."
+                               x:Name="SearchEntry" 
+                               TextChanged="OnSearchTextChanged"/>
+
+                        <Image Grid.Column="1" 
+                               Source="search.png" 
+                               HeightRequest="20" 
+                               WidthRequest="20"
+                               HorizontalOptions="End"
+                               VerticalOptions="Center"/>
+                    </Grid>
+                </Frame>
+            </Grid>
+
+            <!-- Filter Options -->
+            <Grid Grid.Row="1" Margin="0,15,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" 
+                       Text="Filter by: " 
+                       FontSize="16" 
+                       VerticalOptions="Center"
+                       TextColor="#2c3e50"/>
+
+                <Picker Grid.Column="1" 
+                        Title="Select Subject"
+                        x:Name="SubjectPicker"
+                        WidthRequest="150"
+                        Margin="10,0,10,0"
+                        SelectedIndexChanged="OnFilterChanged"/>
+
+                <Picker Grid.Column="2" 
+                        Title="Select Project"
+                        x:Name="ProjectPicker"
+                        WidthRequest="150"
+                        Margin="0,0,10,0"
+                        SelectedIndexChanged="OnFilterChanged"/>
+
+                <Button Grid.Column="3" 
+                        Text="Reset Filters" 
+                        HorizontalOptions="End"
+                        BackgroundColor="#e0e0e0" 
+                        TextColor="#2c3e50"
+                        WidthRequest="120"
+                        HeightRequest="40"
+                        CornerRadius="6"
+                        Clicked="OnResetFilters"/>
+            </Grid>
+
+            <!-- Equipment List -->
+            <Frame Grid.Row="2" 
+                   BackgroundColor="White" 
+                   BorderColor="#e0e0e0" 
+                   CornerRadius="8" 
+                   HasShadow="True"
+                   Padding="0"
+                   Margin="0,10,0,15">
+                <Grid>
+                    <!-- Column Headers -->
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" BackgroundColor="#e8f5e9" Padding="15,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" Text="Equipment ID" FontAttributes="Bold" TextColor="#2c3e50"/>
+                        <Label Grid.Column="1" Text="Equipment Name" FontAttributes="Bold" TextColor="#2c3e50"/>
+                        <Label Grid.Column="2" Text="Student Name" FontAttributes="Bold" TextColor="#2c3e50"/>
+                        <Label Grid.Column="3" Text="Project" FontAttributes="Bold" TextColor="#2c3e50"/>
+                        <Label Grid.Column="4" Text="Borrow Date" FontAttributes="Bold" TextColor="#2c3e50"/>
+                        <Label Grid.Column="5" Text="Return Date" FontAttributes="Bold" TextColor="#2c3e50"/>
+                    </Grid>
+
+                    <ListView Grid.Row="1" 
+                              x:Name="BorrowedEquipmentListView"
+                              ItemSelected="OnEquipmentSelected"
+                              SeparatorColor="#e0e0e0"
+                              HasUnevenRows="True">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid Padding="15,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Grid.Column="0" Text="{Binding EquipmentId}" TextColor="#2c3e50"/>
+                                        <Label Grid.Column="1" Text="{Binding EquipmentName}" TextColor="#2c3e50"/>
+                                        <Label Grid.Column="2" Text="{Binding StudentName}" TextColor="#2c3e50"/>
+                                        <Label Grid.Column="3" Text="{Binding ProjectName}" TextColor="#2c3e50"/>
+                                        <Label Grid.Column="4" Text="{Binding BorrowDate, StringFormat='{0:MM/dd/yyyy}'}" TextColor="#2c3e50"/>
+                                        <Label Grid.Column="5" Text="{Binding ReturnDate, StringFormat='{0:MM/dd/yyyy}'}" TextColor="#2c3e50"/>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Frame>
+
+            <!-- Action Buttons -->
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" 
+                       x:Name="TotalItemsLabel"
+                       Text="Total Items: 0" 
+                       VerticalOptions="Center" 
+                       TextColor="#666666"/>
+
+                <Button Grid.Column="1" 
+                        Text="Export to CSV" 
+                        BackgroundColor="#1976d2" 
+                        TextColor="White"
+                        WidthRequest="150"
+                        HeightRequest="45"
+                        CornerRadius="6"
+                        Margin="0,0,15,0"
+                        Clicked="OnExportClicked"/>
+
+                <Button Grid.Column="2" 
+                        Text="View Details" 
+                        BackgroundColor="#4caf50" 
+                        TextColor="White"
+                        WidthRequest="150"
+                        HeightRequest="45"
+                        CornerRadius="6"
+                        Clicked="OnViewDetailsClicked"
+                        x:Name="ViewDetailsButton"
+                        IsEnabled="False"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentPage>

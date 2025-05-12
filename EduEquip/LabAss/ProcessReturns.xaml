@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EduEquip.ProcessReturns"
+             BackgroundColor="#f8f9fa"
+             Title="Process Equipment Returns">
+
+    <Grid>
+     
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Frame Grid.Row="0" Padding="20" BackgroundColor="#2c3e50" HasShadow="True">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Image Grid.Column="0" Source="logo.png" HeightRequest="60" WidthRequest="60" VerticalOptions="Center"/>
+
+                <VerticalStackLayout Grid.Column="1" Margin="15,0,0,0" VerticalOptions="Center">
+                    <Label Text="EduEquip" FontSize="22" FontAttributes="Bold" TextColor="White"/>
+                    <Label Text="Process Equipment Returns" FontSize="16" TextColor="#e0e0e0"/>
+                </VerticalStackLayout>
+
+                <Button Grid.Column="2" 
+                        Text="Back to Dashboard" 
+                        BackgroundColor="#4caf50" 
+                        TextColor="White"
+                        HeightRequest="40"
+                        Padding="15,0"
+                        CornerRadius="6"
+                        Clicked="OnBackToDashboardClicked"/>
+            </Grid>
+        </Frame>
+
+       
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20" Spacing="20">
+
+           
+                <VerticalStackLayout>
+                    <Label Text="Pending Returns" FontSize="22" FontAttributes="Bold" TextColor="#2c3e50" Margin="0,0,0,10"/>
+
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Entry Grid.Column="0" 
+                               x:Name="SearchEntry" 
+                               Placeholder="Search by ID, student name, or equipment name" 
+                               BackgroundColor="White"
+                               Margin="0,0,10,0"/>
+
+                        <Button Grid.Column="1" 
+                                Text="Search" 
+                                BackgroundColor="#4caf50" 
+                                TextColor="White"
+                                WidthRequest="100"
+                                HeightRequest="40"
+                                CornerRadius="6"
+                                Clicked="OnSearchClicked"/>
+                    </Grid>
+
+              
+                    <Frame BackgroundColor="White" CornerRadius="8" HasShadow="True" Padding="0" Margin="0,0,0,15">
+                        <Grid>
+                   
+                            <Grid Padding="15,10" BackgroundColor="#e8f5e9">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.8*"/>
+                                    <ColumnDefinition Width="1.2*"/>
+                                    <ColumnDefinition Width="1.2*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Grid.Column="0" Text="Borrow ID" FontAttributes="Bold" TextColor="#2c3e50"/>
+                                <Label Grid.Column="1" Text="Student" FontAttributes="Bold" TextColor="#2c3e50"/>
+                                <Label Grid.Column="2" Text="Equipment" FontAttributes="Bold" TextColor="#2c3e50"/>
+                                <Label Grid.Column="3" Text="Due Date" FontAttributes="Bold" TextColor="#2c3e50"/>
+                                <Label Grid.Column="4" Text="Status" FontAttributes="Bold" TextColor="#2c3e50"/>
+                                <Label Grid.Column="5" Text="Actions" FontAttributes="Bold" TextColor="#2c3e50"/>
+                            </Grid>
+                        </Grid>
+                    </Frame>
+
+                    <CollectionView x:Name="ReturnsCollectionView" 
+                                   HeightRequest="250" 
+                                   SelectionMode="Single"
+                                   EmptyView="No pending returns to display">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="15,10" BackgroundColor="{Binding RowColor}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0.8*"/>
+                                        <ColumnDefinition Width="1.2*"/>
+                                        <ColumnDefinition Width="1.2*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Grid.Column="0" Text="{Binding BorrowId}" VerticalOptions="Center"/>
+                                    <Label Grid.Column="1" Text="{Binding StudentName}" VerticalOptions="Center"/>
+                                    <Label Grid.Column="2" Text="{Binding EquipmentName}" VerticalOptions="Center"/>
+                                    <Label Grid.Column="3" Text="{Binding DueDate, StringFormat='{0:MM/dd/yyyy}'}" VerticalOptions="Center"/>
+                                    <Label Grid.Column="4" Text="{Binding Status}" VerticalOptions="Center" 
+                                           TextColor="{Binding StatusColor}"/>
+
+                                    <Button Grid.Column="5" 
+                                            Text="Process" 
+                                            BackgroundColor="#4caf50" 
+                                            TextColor="White"
+                                            HeightRequest="35"
+                                            CornerRadius="4"
+                                            CommandParameter="{Binding BorrowId}"
+                                            Clicked="OnProcessReturnClicked"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+
+                <Frame BackgroundColor="White" CornerRadius="8" HasShadow="True" Padding="20" IsVisible="{Binding IsReturnFormVisible}">
+                    <VerticalStackLayout x:Name="ReturnForm" Spacing="15">
+                        <Label Text="Process Equipment Return" FontSize="20" FontAttributes="Bold" TextColor="#2c3e50"/>
+
+                        <Grid ColumnSpacing="15" RowSpacing="15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                  
+                            <VerticalStackLayout Grid.Column="0" Grid.Row="0" Spacing="5">
+                                <Label Text="Borrow ID" FontAttributes="Bold" TextColor="#2c3e50"/>
+                                <Entry x:Name="BorrowIdEntry" IsEnabled="False" BackgroundColor="#f5f5f5"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Column="0" Grid.Row="1" Spacing="5">
+                                <Label Text="Student" FontAttributes="Bold" TextColor="#2c3e50"/>
+                                <Entry x:Name="StudentNameEntry" IsEnabled="False" BackgroundColor="#f5f5f5"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Column="0" Grid.Row="2" Spacing="5">
+                                <Label Text="Equipment" FontAttributes="Bold" TextColor="#2c3e50"/>
+                                <Entry x:Name="EquipmentNameEntry" IsEnabled="False" BackgroundColor="#f5f5f5"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Column="1" Grid.Row="0" Spacing="5">
+                                <Label Text="Return Date *" FontAttributes="Bold" TextColor="#2c3e50"/>
+                                <DatePicker x:Name="ReturnDatePicker"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Column="1" Grid.Row="1" Spacing="5">
+                                <Label Text="Equipment Condition *" FontAttributes="Bold" TextColor="#2c3e50"/>
+                                <Picker x:Name="ConditionPicker">
+                                    <Picker.Items>
+                                        <x:String>Excellent</x:String>
+                                        <x:String>Good</x:String>
+                                        <x:String>Fair</x:String>
+                                        <x:String>Poor</x:String>
+                                        <x:String>Damaged</x:String>
+                                    </Picker.Items>
+                                </Picker>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Column="1" Grid.Row="2" Spacing="5">
+                                <Label Text="Return Status *" FontAttributes="Bold" TextColor="#2c3e50"/>
+                                <Picker x:Name="ReturnStatusPicker">
+                                    <Picker.Items>
+                                        <x:String>Returned on time</x:String>
+                                        <x:String>Returned late</x:String>
+                                        <x:String>Lost</x:String>
+                                    </Picker.Items>
+                                </Picker>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Notes" FontAttributes="Bold" TextColor="#2c3e50"/>
+                            <Editor x:Name="NotesEditor" HeightRequest="100" Placeholder="Add any notes about the returned equipment"/>
+                        </VerticalStackLayout>
+
+           
+                        <Grid ColumnSpacing="15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Column="0" 
+                                    Text="Cancel" 
+                                    BackgroundColor="#e0e0e0" 
+                                    TextColor="#333333"
+                                    HeightRequest="45"
+                                    CornerRadius="6"
+                                    Clicked="OnCancelProcessClicked"/>
+
+                            <Button Grid.Column="1" 
+                                    Text="Complete Return" 
+                                    BackgroundColor="#4caf50" 
+                                    TextColor="White"
+                                    HeightRequest="45"
+                                    CornerRadius="6"
+                                    Clicked="OnCompleteReturnClicked"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <VerticalStackLayout>
+                    <Label Text="Recently Processed Returns" FontSize="22" FontAttributes="Bold" TextColor="#2c3e50" Margin="0,0,0,10"/>
+
+        
+                    <CollectionView x:Name="ProcessedReturnsCollectionView" 
+                                   HeightRequest="200" 
+                                   SelectionMode="None"
+                                   EmptyView="No recently processed returns to display">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="15,10" BackgroundColor="{Binding RowColor}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0.8*"/>
+                                        <ColumnDefinition Width="1.2*"/>
+                                        <ColumnDefinition Width="1.2*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Grid.Column="0" Text="{Binding BorrowId}" VerticalOptions="Center"/>
+                                    <Label Grid.Column="1" Text="{Binding StudentName}" VerticalOptions="Center"/>
+                                    <Label Grid.Column="2" Text="{Binding EquipmentName}" VerticalOptions="Center"/>
+                                    <Label Grid.Column="3" Text="{Binding ReturnDate, StringFormat='{0:MM/dd/yyyy}'}" VerticalOptions="Center"/>
+                                    <Label Grid.Column="4" Text="{Binding Condition}" VerticalOptions="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

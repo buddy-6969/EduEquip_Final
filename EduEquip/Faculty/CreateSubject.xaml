@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EduEquip.CreateSubject"
+             Title="Manage Subjects"
+             BackgroundColor="White">
+
+    <!-- Make sure this page class name exactly matches your code-behind -->
+
+    <ScrollView BackgroundColor="White">
+        <VerticalStackLayout Padding="20" Spacing="15" BackgroundColor="White">
+            <Label Text="Course Subject Management" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,20" TextColor="#333333"/>
+
+            <!-- Subject Creation Form -->
+            <Frame BorderColor="#DDDDDD" Padding="15" CornerRadius="10" BackgroundColor="#F9F9F9">
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Subject Details" FontSize="18" FontAttributes="Bold" TextColor="#333333"/>
+
+                    <!-- Make sure all x:Name values exactly match your code-behind -->
+                    <!-- Using Frames to create borders around Entry and Editor controls -->
+                    <Frame Padding="0" BorderColor="#AAAAAA" BackgroundColor="White" HasShadow="False" CornerRadius="4">
+                        <Entry x:Name="SubjectNameEntry" 
+                               Placeholder="Subject Name" 
+                               PlaceholderColor="#888888" 
+                               TextColor="#333333"
+                               BackgroundColor="White"
+                               Margin="5,0"/>
+                    </Frame>
+
+                    <Frame Padding="0" BorderColor="#AAAAAA" BackgroundColor="White" HasShadow="False" CornerRadius="4">
+                        <Entry x:Name="SubjectCodeEntry" 
+                               Placeholder="Subject Code" 
+                               PlaceholderColor="#888888" 
+                               TextColor="#333333"
+                               BackgroundColor="White"
+                               Margin="5,0"/>
+                    </Frame>
+
+                    <Frame Padding="0" BorderColor="#AAAAAA" BackgroundColor="White" HasShadow="False" CornerRadius="4">
+                        <Entry x:Name="SubjectUnitsEntry" 
+                               Placeholder="Units" 
+                               Keyboard="Numeric" 
+                               PlaceholderColor="#888888" 
+                               TextColor="#333333"
+                               BackgroundColor="White"
+                               Margin="5,0"/>
+                    </Frame>
+
+                    <Frame Padding="0" BorderColor="#AAAAAA" BackgroundColor="White" HasShadow="False" CornerRadius="4">
+                        <Editor x:Name="SubjectDescriptionEditor" 
+                                Placeholder="Subject Description" 
+                                HeightRequest="100" 
+                                PlaceholderColor="#888888" 
+                                TextColor="#333333"
+                                BackgroundColor="White"
+                                Margin="5,2"/>
+                    </Frame>
+
+                    <Button x:Name="SaveButton" Text="Create Subject" Clicked="OnSaveSubjectClicked" 
+                            BackgroundColor="#4CAF50" TextColor="White" CornerRadius="5"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Subjects List -->
+            <Label Text="Your Subjects" FontSize="18" FontAttributes="Bold" Margin="0,10,0,5" TextColor="#333333"/>
+
+            <CollectionView x:Name="SubjectsCollection" SelectionMode="Single" SelectionChanged="OnSubjectSelected" 
+                          EmptyView="No subjects created yet. Create your first subject above." BackgroundColor="White">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="#DDDDDD" Margin="0,5" Padding="10" CornerRadius="5" BackgroundColor="#F9F9F9">
+                            <Grid ColumnDefinitions="4*,1*,1*">
+                                <VerticalStackLayout Grid.Column="0">
+                                    <Label Text="{Binding Name}" FontAttributes="Bold" TextColor="#333333"/>
+                                    <Label Text="{Binding Code}" FontSize="14" TextColor="#555555"/>
+                                    <Label Text="{Binding Units, StringFormat='{0} units'}" FontSize="14" TextColor="#555555"/>
+                                    <Label Text="{Binding Description}" FontSize="12" LineBreakMode="TailTruncation" TextColor="#555555"/>
+                                </VerticalStackLayout>
+
+                                <Button Grid.Column="1" Text="Edit" 
+                                        CommandParameter="{Binding Id}"
+                                        Clicked="OnEditSubjectClicked"
+                                        BackgroundColor="#1976D2" TextColor="White" 
+                                        Margin="2,0" CornerRadius="5"
+                                        HeightRequest="35"
+                                        FontSize="12"/>
+
+                                <Button Grid.Column="2" Text="Delete" 
+                                        CommandParameter="{Binding Id}"
+                                        Clicked="OnDeleteSubjectClicked" 
+                                        BackgroundColor="#E64A19" TextColor="White"
+                                        Margin="2,0" CornerRadius="5"
+                                        HeightRequest="35"
+                                        FontSize="12"/>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Button Text="Back to Dashboard" Clicked="OnBackToDashboardClicked" 
+                    BackgroundColor="#546E7A" TextColor="White" Margin="0,20,0,0" CornerRadius="5"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EduEquip.GenerateReportsPage"
+             Title="Generate Reports">
+    <VerticalStackLayout Padding="20" Spacing="15">
+        <Frame x:Name="ReportPreviewFrame" BorderColor="Gray" CornerRadius="10" Padding="15" HasShadow="True">
+            <VerticalStackLayout Spacing="10">
+                <Label x:Name="ReportTitleLabel" 
+                       Text="Report Title" 
+                       FontSize="24" 
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center" />
+
+                <Label x:Name="ReportDateLabel" 
+                       Text="Generated on: 04/18/2025" 
+                       FontSize="14" 
+                       TextColor="Gray"
+                       HorizontalOptions="Center" />
+
+                <VerticalStackLayout x:Name="ReportContentLayout" Spacing="10" Margin="0,15,0,0">
+
+                    <Label Text="Report content will appear here" TextColor="DarkGray" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </Frame>
+
+        <Button Text="Generate Report" 
+                BackgroundColor="#007AFF" 
+                TextColor="White"
+                CornerRadius="8"
+                HorizontalOptions="Center" />
+    </VerticalStackLayout>
+</ContentPage>

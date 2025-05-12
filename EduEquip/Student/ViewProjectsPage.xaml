@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EduEquip.ViewProjectsPage"
+             BackgroundColor="#FAFAFA"
+             Title="View Projects">
+
+    <Grid Padding="20" RowSpacing="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <VerticalStackLayout Grid.Row="0" Spacing="12" Margin="0,0,0,8">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0" Source="logo.png" HeightRequest="50" WidthRequest="50" VerticalOptions="Center"/>
+                <Label Grid.Column="1" Text="View Projects" FontSize="22" FontAttributes="Bold" TextColor="#194185" Margin="12,0,0,0" VerticalOptions="Center"/>
+            </Grid>
+            <Label x:Name="StudentInfoLabel" Text="Student: " FontSize="16" TextColor="#424242"/>
+            <BoxView HeightRequest="1" BackgroundColor="#E0E0E0"/>
+        </VerticalStackLayout>
+
+      
+        <Frame Grid.Row="1" BorderColor="#E0E0E0" HasShadow="False" BackgroundColor="White" Padding="16" CornerRadius="8">
+            <VerticalStackLayout Spacing="12">
+                <Grid ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Frame Grid.Column="0" BorderColor="#E0E0E0" HasShadow="False" Padding="2" CornerRadius="6">
+                        <Entry Placeholder="Search projects..." PlaceholderColor="#9E9E9E" TextColor="#212121" BackgroundColor="Transparent"/>
+                    </Frame>
+                    <Button Grid.Column="1" Text="Search" BackgroundColor="#194185" TextColor="White" 
+                            CornerRadius="6" Padding="16,10"/>
+                </Grid>
+                <Grid ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Frame Grid.Column="0" BorderColor="#E0E0E0" HasShadow="False" Padding="0" CornerRadius="6">
+                        <Picker Title="Filter by Subject" x:Name="SubjectPicker" TextColor="#212121" TitleColor="#757575" BackgroundColor="Transparent">
+                            <Picker.Items>
+                                <x:String>All Subjects</x:String>
+                                <x:String>CPE SD1</x:String>
+                                <x:String>Digital Logic</x:String>
+                                <x:String>Computer Architecture</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </Frame>
+                    <Frame Grid.Column="1" BorderColor="#E0E0E0" HasShadow="False" Padding="0" CornerRadius="6">
+                        <Picker Title="Filter by Status" x:Name="StatusPicker" TextColor="#212121" TitleColor="#757575" BackgroundColor="Transparent">
+                            <Picker.Items>
+                                <x:String>All Status</x:String>
+                                <x:String>Ongoing</x:String>
+                                <x:String>Completed</x:String>
+                                <x:String>Not Started</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </Frame>
+                </Grid>
+            </VerticalStackLayout>
+        </Frame>
+
+    
+        <RefreshView Grid.Row="2" x:Name="ProjectsRefreshView" Margin="0,8,0,0">
+            <CollectionView x:Name="ProjectsCollection" SelectionMode="Single" SelectionChanged="OnProjectSelected">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="0,6" Padding="0" BorderColor="#E0E0E0" HasShadow="True" CornerRadius="8" BackgroundColor="White">
+                            <Grid Padding="16" ColumnSpacing="16">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                    
+                                <Frame Grid.Column="0" 
+                                       BackgroundColor="#F5F5F5"
+                                       CornerRadius="8"
+                                       Padding="8"
+                                       HasShadow="False"
+                                       BorderColor="Transparent">
+                                    <Image Source="project_icon.png" 
+                                           HeightRequest="32" 
+                                           WidthRequest="32"
+                                           Aspect="AspectFit"/>
+                                </Frame>
+
+                           
+                                <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                                    <Label Text="{Binding ProjectName}" 
+                                           FontAttributes="Bold" 
+                                           TextColor="#212121"
+                                           FontSize="16"/>
+                                    <Label Text="{Binding SubjectName}" 
+                                           TextColor="#424242"
+                                           FontSize="14"/>
+                                    <Label Text="{Binding Deadline}" 
+                                           TextColor="#757575"
+                                           FontSize="12"/>
+                                </VerticalStackLayout>
+
+                             
+                                <Frame Grid.Column="2" 
+                                       BackgroundColor="{Binding StatusColor}"
+                                       CornerRadius="6"
+                                       Padding="12,6"
+                                       HasShadow="False"
+                                       VerticalOptions="Center"
+                                       BorderColor="Transparent">
+                                    <Label Text="{Binding Status}" 
+                                           TextColor="White" 
+                                           FontSize="12" 
+                                           FontAttributes="Bold"
+                                           HorizontalOptions="Center"/>
+                                </Frame>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Frame BorderColor="Transparent" BackgroundColor="Transparent" HasShadow="False" VerticalOptions="Center" HorizontalOptions="Center">
+                        <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
+                            <Image Source="no_projects.png" HeightRequest="120" WidthRequest="120"/>
+                            <Label Text="No projects found" 
+                                   FontSize="18" 
+                                   TextColor="#616161" 
+                                   HorizontalOptions="Center"
+                                   FontAttributes="Bold"/>
+                            <Label Text="Projects assigned to you will appear here" 
+                                   FontSize="14" 
+                                   TextColor="#9E9E9E" 
+                                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>

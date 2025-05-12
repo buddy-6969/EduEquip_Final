@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EduEquip.ApproveRequests"
+             BackgroundColor="#f8f9fa"
+             Title="Approve Equipment Requests">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Frame Grid.Row="0" Padding="20" BackgroundColor="#2c3e50" HasShadow="True">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Image Grid.Column="0" Source="logo.png" HeightRequest="60" WidthRequest="60" VerticalOptions="Center"/>
+
+                <VerticalStackLayout Grid.Column="1" Margin="15,0,0,0" VerticalOptions="Center">
+                    <Label Text="EduEquip" FontSize="22" FontAttributes="Bold" TextColor="White"/>
+                    <Label Text="Equipment Borrow Requests" FontSize="16" TextColor="#e0e0e0"/>
+                </VerticalStackLayout>
+
+                <Button Grid.Column="2" 
+                        Text="Back to Dashboard" 
+                        BackgroundColor="#ff9800" 
+                        TextColor="White"
+                        HeightRequest="40"
+                        WidthRequest="150"
+                        Clicked="OnBackToDashboardClicked"/>
+            </Grid>
+        </Frame>
+
+     
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20" Spacing="20">
+                <Label Text="Pending Equipment Requests" FontSize="24" FontAttributes="Bold" TextColor="#2c3e50" Margin="0,10,0,10"/>
+
+                <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="10">
+                    <Button Grid.Column="0" Text="All Requests" BackgroundColor="#1976d2" TextColor="White" Clicked="OnFilterAllClicked"/>
+                    <Button Grid.Column="1" Text="Pending" BackgroundColor="#ff9800" TextColor="White" Clicked="OnFilterPendingClicked"/>
+                    <Button Grid.Column="2" Text="Approved" BackgroundColor="#4caf50" TextColor="White" Clicked="OnFilterApprovedClicked"/>
+                    <Button Grid.Column="3" Text="Rejected" BackgroundColor="#f44336" TextColor="White" Clicked="OnFilterRejectedClicked"/>
+                </Grid>
+
+                <Frame BackgroundColor="White" BorderColor="#e0e0e0" CornerRadius="8" Padding="15" HasShadow="True">
+                    <VerticalStackLayout Spacing="15">
+                        <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto,Auto" BackgroundColor="#f5f5f5" Padding="10,5">
+                            <Label Grid.Column="0" Text="Request ID" FontAttributes="Bold" TextColor="#2c3e50" WidthRequest="90"/>
+                            <Label Grid.Column="1" Text="Equipment" FontAttributes="Bold" TextColor="#2c3e50"/>
+                            <Label Grid.Column="2" Text="Borrower" FontAttributes="Bold" TextColor="#2c3e50" WidthRequest="100"/>
+                            <Label Grid.Column="3" Text="Date Needed" FontAttributes="Bold" TextColor="#2c3e50" WidthRequest="120"/>
+                            <Label Grid.Column="4" Text="Status" FontAttributes="Bold" TextColor="#2c3e50" WidthRequest="80"/>
+                            <Label Grid.Column="5" Text="Actions" FontAttributes="Bold" TextColor="#2c3e50" WidthRequest="150" HorizontalOptions="Center"/>
+                        </Grid>
+
+                        <CollectionView x:Name="RequestsCollectionView" EmptyView="No equipment requests found." HeightRequest="500">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto,Auto" Padding="10,10" BackgroundColor="{Binding RowColor}">
+                                        <Label Grid.Column="0" Text="{Binding RequestId}" TextColor="#333333" VerticalOptions="Center" WidthRequest="90"/>
+                                        <Label Grid.Column="1" Text="{Binding EquipmentName}" TextColor="#333333" VerticalOptions="Center"/>
+                                        <Label Grid.Column="2" Text="{Binding BorrowerName}" TextColor="#333333" VerticalOptions="Center" WidthRequest="100"/>
+                                        <Label Grid.Column="3" Text="{Binding DateNeeded}" TextColor="#333333" VerticalOptions="Center" WidthRequest="120"/>
+                                        <Label Grid.Column="4" Text="{Binding Status}" TextColor="{Binding StatusColor}" FontAttributes="Bold" VerticalOptions="Center" WidthRequest="80"/>
+
+                                        <HorizontalStackLayout Grid.Column="5" Spacing="5" HorizontalOptions="Center" WidthRequest="150">
+                                            <Button Text="View" BackgroundColor="#1976d2" TextColor="White" HeightRequest="30" WidthRequest="45"
+                                                    Padding="2" FontSize="12" CommandParameter="{Binding RequestId}" Clicked="OnViewRequestClicked"/>
+                                            <Button Text="Approve" BackgroundColor="#4caf50" TextColor="White" HeightRequest="30" WidthRequest="65"
+                                                    Padding="2" FontSize="12" IsVisible="{Binding IsPending}" CommandParameter="{Binding RequestId}" Clicked="OnApproveRequestClicked"/>
+                                            <Button Text="Reject" BackgroundColor="#f44336" TextColor="White" HeightRequest="30" WidthRequest="55"
+                                                    Padding="2" FontSize="12" IsVisible="{Binding IsPending}" CommandParameter="{Binding RequestId}" Clicked="OnRejectRequestClicked"/>
+                                        </HorizontalStackLayout>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Frame>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

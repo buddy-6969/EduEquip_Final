@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EduEquip.TransactionHistoryPage"
+             BackgroundColor="{AppThemeBinding Light=#F9F9F9, Dark=#1A1A1A}"
+             Title="Transaction History">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="PrimaryColor">#3366CC</Color>
+            <Color x:Key="SecondaryColor">#6C757D</Color>
+            <Color x:Key="AccentColor">#5D9CEC</Color>
+
+            <AppThemeBinding x:Key="SurfaceColor" Light="White" Dark="#2D2D2D"/>
+            <AppThemeBinding x:Key="BorderColor" Light="#E0E0E0" Dark="#444444"/>
+            <AppThemeBinding x:Key="TextColor" Light="Black" Dark="White"/>
+
+            <Style x:Key="HeaderLabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="28"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="{StaticResource PrimaryColor}"/>
+            </Style>
+
+            <Style x:Key="SubHeaderLabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="TextColor" Value="{StaticResource SecondaryColor}"/>
+            </Style>
+
+            <Style x:Key="ActionButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="CornerRadius" Value="8"/>
+                <Setter Property="Padding" Value="15,10"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+
+            <Style x:Key="EntryStyle" TargetType="Entry">
+                <Setter Property="BackgroundColor" Value="{StaticResource SurfaceColor}"/>
+                <Setter Property="TextColor" Value="{StaticResource TextColor}"/>
+                <Setter Property="PlaceholderColor" Value="{StaticResource SecondaryColor}"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+            </Style>
+
+            <Style x:Key="PickerStyle" TargetType="Picker">
+                <Setter Property="BackgroundColor" Value="{StaticResource SurfaceColor}"/>
+                <Setter Property="TextColor" Value="{StaticResource TextColor}"/>
+                <Setter Property="TitleColor" Value="{StaticResource SecondaryColor}"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid Padding="20" RowSpacing="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" ColumnSpacing="15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Image Grid.Column="0"
+                   Source="logo.png" 
+                   HeightRequest="60" 
+                   WidthRequest="60"
+                   VerticalOptions="Center"/>
+
+            <VerticalStackLayout Grid.Column="1" Spacing="5" VerticalOptions="Center">
+                <Label Text="Transaction History" 
+                       Style="{StaticResource HeaderLabelStyle}"/>
+                <Label x:Name="StudentInfoLabel" 
+                       Text="Student: " 
+                       Style="{StaticResource SubHeaderLabelStyle}"/>
+            </VerticalStackLayout>
+        </Grid>
+
+        <BoxView Grid.Row="0" 
+                 HeightRequest="1" 
+                 BackgroundColor="{StaticResource BorderColor}" 
+                 VerticalOptions="End" 
+                 Margin="0,15,0,0"/>
+
+    
+        <Grid Grid.Row="1" RowSpacing="12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            
+            <Frame Grid.Row="0" 
+                   Padding="5,0" 
+                   BorderColor="{StaticResource BorderColor}" 
+                   BackgroundColor="{StaticResource SurfaceColor}"
+                   CornerRadius="10"
+                   HasShadow="False">
+                <Grid ColumnSpacing="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Grid.Column="0" 
+                           Source="search_icon.png" 
+                           HeightRequest="20" 
+                           WidthRequest="20"
+                           VerticalOptions="Center"
+                           Margin="10,0,0,0"/>
+
+                    <Entry Grid.Column="1" 
+                           Placeholder="Search transactions..." 
+                           x:Name="SearchEntry"
+                           BackgroundColor="Transparent"
+                           Style="{StaticResource EntryStyle}"/>
+
+                    <Button Grid.Column="2" 
+                            Text="Search" 
+                            Style="{StaticResource ActionButtonStyle}"
+                            WidthRequest="80"
+                            Clicked="OnSearchClicked"/>
+                </Grid>
+            </Frame>
+
+    
+            <Grid Grid.Row="1" ColumnSpacing="15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Frame Grid.Column="0" 
+                       Padding="5,0" 
+                       BorderColor="{StaticResource BorderColor}" 
+                       BackgroundColor="{StaticResource SurfaceColor}"
+                       CornerRadius="10"
+                       HasShadow="False">
+                    <Picker Style="{StaticResource PickerStyle}"
+                            Title="Filter by Type" 
+                            x:Name="TypePicker" 
+                            SelectedIndexChanged="OnTypeFilterChanged">
+                        <Picker.Items>
+                            <x:String>All Types</x:String>
+                            <x:String>Borrow</x:String>
+                            <x:String>Return</x:String>
+                            <x:String>Extension</x:String>
+                        </Picker.Items>
+                    </Picker>
+                </Frame>
+
+                <Frame Grid.Column="1" 
+                       Padding="5,0" 
+                       BorderColor="{StaticResource BorderColor}" 
+                       BackgroundColor="{StaticResource SurfaceColor}"
+                       CornerRadius="10"
+                       HasShadow="False">
+                    <Picker Style="{StaticResource PickerStyle}"
+                            Title="Filter by Date" 
+                            x:Name="DatePicker" 
+                            SelectedIndexChanged="OnDateFilterChanged">
+                        <Picker.Items>
+                            <x:String>All Dates</x:String>
+                            <x:String>Last 7 Days</x:String>
+                            <x:String>Last 30 Days</x:String>
+                            <x:String>Last 90 Days</x:String>
+                        </Picker.Items>
+                    </Picker>
+                </Frame>
+            </Grid>
+        </Grid>
+
+ 
+        <RefreshView Grid.Row="2" x:Name="TransactionRefreshView">
+            <CollectionView x:Name="TransactionCollection" 
+                           SelectionMode="Single" 
+                           SelectionChanged="OnTransactionSelected">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="0,6" 
+                               Padding="0" 
+                               HasShadow="False"
+                               BorderColor="{StaticResource BorderColor}"
+                               BackgroundColor="{StaticResource SurfaceColor}"
+                               CornerRadius="12">
+                            <Grid Padding="18" ColumnSpacing="15">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Frame Grid.Column="0" 
+                                       CornerRadius="10" 
+                                       Padding="10"
+                                       HasShadow="False"
+                                       BackgroundColor="{Binding IconBackgroundColor}"
+                                       WidthRequest="48" 
+                                       HeightRequest="48"
+                                       HorizontalOptions="Center" 
+                                       VerticalOptions="Center">
+                                    <Image Source="{Binding IconSource}" 
+                                           HeightRequest="24" 
+                                           WidthRequest="24"/>
+                                </Frame>
+
+                             
+                                <VerticalStackLayout Grid.Column="1" Spacing="6" VerticalOptions="Center">
+                                    <Label Text="{Binding EquipmentName}" 
+                                           FontAttributes="Bold" 
+                                           FontSize="17"/>
+                                    <Label Text="{Binding Description}" 
+                                           FontSize="14" 
+                                           TextColor="{StaticResource SecondaryColor}"/>
+                                    <Label Text="{Binding Date}" 
+                                           FontSize="12" 
+                                           TextColor="{StaticResource SecondaryColor}"/>
+                                </VerticalStackLayout>
+
+                                <Frame Grid.Column="2" 
+                                       BackgroundColor="{Binding TypeColor}"
+                                       CornerRadius="8"
+                                       Padding="12,5"
+                                       HasShadow="False"
+                                       VerticalOptions="Start">
+                                    <Label Text="{Binding Type}" 
+                                           TextColor="White" 
+                                           FontSize="12" 
+                                           FontAttributes="Bold"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                </Frame>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="15">
+                        <Frame BackgroundColor="{StaticResource AccentColor}" 
+                               CornerRadius="75" 
+                               HeightRequest="110" 
+                               WidthRequest="110"
+                               Opacity="0.1"
+                               HasShadow="False"
+                               HorizontalOptions="Center">
+                            <Image Source="no_transactions.png" 
+                                   HeightRequest="60" 
+                                   WidthRequest="60"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Frame>
+                        <Label Text="No Transactions Found" 
+                               FontSize="20" 
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource PrimaryColor}" 
+                               HorizontalOptions="Center"/>
+                        <Label Text="Your equipment transaction history will appear here" 
+                               FontSize="14" 
+                               TextColor="{StaticResource SecondaryColor}"
+                               HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>

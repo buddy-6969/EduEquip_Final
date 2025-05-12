@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EduEquip.FacultyDashboard"
+             BackgroundColor="#f8f9fa"
+             Title="Faculty Dashboard">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header - Matching the student dashboard style -->
+        <Frame Grid.Row="0" Padding="20" BackgroundColor="#2c3e50" HasShadow="True">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Image Grid.Column="0" Source="eduequip_logo.png" HeightRequest="60" WidthRequest="60" VerticalOptions="Center"/>
+
+                <VerticalStackLayout Grid.Column="1" Margin="15,0,0,0" VerticalOptions="Center">
+                    <Label Text="EduEquip" FontSize="22" FontAttributes="Bold" TextColor="White"/>
+                    <Label x:Name="WelcomeLabel" Text="Welcome, Professor" FontSize="16" TextColor="#e0e0e0"/>
+                </VerticalStackLayout>
+            </Grid>
+        </Frame>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20" Spacing="15">
+                <Label Text="Dashboard" FontSize="24" FontAttributes="Bold" TextColor="#2c3e50" Margin="0,10,0,5"/>
+
+                <Grid ColumnSpacing="15" RowSpacing="15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Create Subject Card -->
+                    <Frame Grid.Row="0" Grid.Column="0" 
+                           BackgroundColor="White"
+                           CornerRadius="8"
+                           HasShadow="True"
+                           Padding="15">
+                        <VerticalStackLayout Spacing="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Frame Grid.Column="0" 
+                                       BackgroundColor="#e3f2fd" 
+                                       CornerRadius="8" 
+                                       HeightRequest="45" 
+                                       WidthRequest="45"
+                                       Padding="0"
+                                       HasShadow="False">
+                                    <Rectangle Fill="#e3f2fd" 
+                                           HeightRequest="25" 
+                                           WidthRequest="25" 
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                </Frame>
+
+                                <Label Grid.Column="1"
+                                       Text="Create Subject" 
+                                       FontSize="18" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#2c3e50"
+                                       VerticalOptions="Center"
+                                       Margin="10,0,0,0"/>
+                            </Grid>
+
+                            <Label Text="Create and manage subjects for students" 
+                                   TextColor="#666666"
+                                   FontSize="14"/>
+
+                            <Button Text="Create Subject" 
+                                    BackgroundColor="#1976d2" 
+                                    TextColor="White"
+                                    CornerRadius="6"
+                                    HeightRequest="40"
+                                    Clicked="OnCreateSubjectClicked"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- Manage Projects Card -->
+                    <Frame Grid.Row="0" Grid.Column="1" 
+                           BackgroundColor="White"
+                           CornerRadius="8"
+                           HasShadow="True"
+                           Padding="15">
+                        <VerticalStackLayout Spacing="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Frame Grid.Column="0" 
+                                       BackgroundColor="#fff8e1" 
+                                       CornerRadius="8" 
+                                       HeightRequest="45" 
+                                       WidthRequest="45"
+                                       Padding="0"
+                                       HasShadow="False">
+                                    <Rectangle Fill="#fff8e1" 
+                                           HeightRequest="25" 
+                                           WidthRequest="25" 
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                </Frame>
+
+                                <Label Grid.Column="1"
+                                       Text="Manage Projects" 
+                                       FontSize="18" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#2c3e50"
+                                       VerticalOptions="Center"
+                                       Margin="10,0,0,0"/>
+                            </Grid>
+
+                            <Label Text="Create and track student projects" 
+                                   TextColor="#666666"
+                                   FontSize="14"/>
+
+                            <Button Text="Manage Projects" 
+                                    BackgroundColor="#ff9800" 
+                                    TextColor="White"
+                                    CornerRadius="6"
+                                    HeightRequest="40"
+                                    Clicked="OnManageProjectsClicked"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- View Borrowed Equipment Card -->
+                    <Frame Grid.Row="1" Grid.Column="0" 
+                           BackgroundColor="White"
+                           CornerRadius="8"
+                           HasShadow="True"
+                           Padding="15">
+                        <VerticalStackLayout Spacing="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Frame Grid.Column="0" 
+                                       BackgroundColor="#e8f5e9" 
+                                       CornerRadius="8" 
+                                       HeightRequest="45" 
+                                       WidthRequest="45"
+                                       Padding="0"
+                                       HasShadow="False">
+                                    <Rectangle Fill="#e8f5e9" 
+                                           HeightRequest="25" 
+                                           WidthRequest="25" 
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                </Frame>
+
+                                <Label Grid.Column="1"
+                                       Text="View Borrowed Equipment" 
+                                       FontSize="18" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#2c3e50"
+                                       VerticalOptions="Center"
+                                       Margin="10,0,0,0"/>
+                            </Grid>
+
+                            <Label Text="Track equipment borrowed for projects" 
+                                   TextColor="#666666"
+                                   FontSize="14"/>
+
+                            <Button Text="View Equipment" 
+                                    BackgroundColor="#4caf50" 
+                                    TextColor="White"
+                                    CornerRadius="6"
+                                    HeightRequest="40"
+                                    Clicked="OnViewBorrowedEquipmentClicked"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- View Overdue Equipment Card -->
+                    <Frame Grid.Row="1" Grid.Column="1" 
+                           BackgroundColor="White"
+                           CornerRadius="8"
+                           HasShadow="True"
+                           Padding="15">
+                        <VerticalStackLayout Spacing="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Frame Grid.Column="0" 
+                                       BackgroundColor="#ffebee" 
+                                       CornerRadius="8" 
+                                       HeightRequest="45" 
+                                       WidthRequest="45"
+                                       Padding="0"
+                                       HasShadow="False">
+                                    <Rectangle Fill="#ffebee" 
+                                           HeightRequest="25" 
+                                           WidthRequest="25" 
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                </Frame>
+
+                                <Label Grid.Column="1"
+                                       Text="View Overdue Equipment" 
+                                       FontSize="18" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#2c3e50"
+                                       VerticalOptions="Center"
+                                       Margin="10,0,0,0"/>
+                            </Grid>
+
+                            <Label Text="Monitor overdue equipment and send reminders" 
+                                   TextColor="#666666"
+                                   FontSize="14"/>
+
+                            <Button Text="View Overdue Items" 
+                                    BackgroundColor="#f44336" 
+                                    TextColor="White"
+                                    CornerRadius="6"
+                                    HeightRequest="40"
+                                    Clicked="OnViewOverdueEquipmentClicked"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
